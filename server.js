@@ -1,21 +1,17 @@
-const express = require('express');
-let hbs = require('express-handlebars');
+var express = require('express')
+var exphbs = require('express-handlebars');
 
-const app = express();
-//Setup View Engine with configuration options
-app.engine('hbs', hbs({extname: 'hbs', defaultLayout:"main"}));
+var app = express()
+
+app.engine('hbs', exphbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
 
-//app.use('/', )
-
 app.get('/', function (req, res) {
-  res.render('main.hbs', "test");
-});
+    res.render('posts-new', {msg: 'Hello World!'})
+    //res.send("hello")
 
-app.get('/posts/new', function(req, res) {
-    res.render('./views/layouts/layout.hbs');
-});
+})
 
 app.listen(8082, function () {
-  console.log('Example app listening on port 8082!');
-});
+ console.log('Threaddit listening on port 8082!')
+})
