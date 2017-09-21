@@ -1,0 +1,27 @@
+{
+  "name": "threaddit",
+  "version": "1.0.0",
+  "description": "A reddit clone for redditting redditors",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/JSitter/Threaddit.git"
+  },
+  "keywords": [
+    "reddit",
+    "clone"
+  ],
+  "author": "Justin Sitter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JSitter/Threaddit/issues"
+  },
+  "homepage": "https://github.com/JSitter/Threaddit#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
+}
