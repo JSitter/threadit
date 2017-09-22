@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 
 //Setup posts/new landing page
 app.get('/posts/new', function(req, res){
-    res.render('posts-new', { msg: "Remember remember the 5th of September", title: "The Threadit Machine"});
+    res.render('posts-new', {title: "Create Post"});
 });
 
 //Setup create route to check that form data is sending to proper route
