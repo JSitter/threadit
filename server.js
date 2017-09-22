@@ -12,12 +12,12 @@ mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection 
 
 //Setup Mongodb Posts Model
 var Post = mongoose.model('Post', {
-    title: String,
+    post_title: String,
     post_body: String,
     user_name: String
 })
 
-//Add bodyParser to App
+//Add bodyParser to App to get post data
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Setup handlebars view engine and pass in parameters
@@ -29,6 +29,17 @@ app.get('/', function (req, res) {
     res.render('posts-new', {msg: 'Hello World!'})
 })
 
+//Setup posts/new landing page
+app.get('/posts/new', function(req, res){
+    res.render('posts-new', { msg: "Just say no to pumpkin spice lattes!", title: "The Threadit Machine"});
+});
+
+//Setup create posts route to check that form data is sending to proper route
+app.post('/create', function(req, res){
+
+})
+
+//Listen on port 8082
 app.listen(8082, function () {
  console.log('Threaddit listening on port 8082!')
 })
