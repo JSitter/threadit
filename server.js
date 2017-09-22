@@ -31,13 +31,13 @@ app.get('/', function (req, res) {
 
 //Setup posts/new landing page
 app.get('/posts/new', function(req, res){
-    res.render('posts-new', { msg: "Just say no to pumpkin spice lattes!", title: "The Threadit Machine"});
+    res.render('posts-new', { msg: "Remember remember the 5th of September", title: "The Threadit Machine"});
 });
 
-//Setup create posts route to check that form data is sending to proper route
+//Setup create route to check that form data is sending to proper route
 app.post('/create', function(req, res){
-
-})
+    res.send(req.body);
+});
 
 //Listen on port 8082
 app.listen(8082, function () {

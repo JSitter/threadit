@@ -1,1 +1,13 @@
-<h1>{{msg}}</h1>
+<h1>Create New Post</h1>
+<form method="POST" action="/create">
+    <p>
+        <label class="input-label" for="title">Post Title</label>
+        <input type="text" name="title">
+    </p>
+    <p>
+        <label class="input-label" for="post_content">Post Content</label>
+        <textarea name="post_content" id="content_text" cols="30" rows="10"></textarea>
+    </p>
+    <button type="submit">Save Post</button>
+    
+</form>
