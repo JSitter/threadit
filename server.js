@@ -28,6 +28,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
 
+/****************************************************************************
+ *              SETUP APP LANDING PAGES
+ * 
+ * **************************************************************************/
+
 /**************************************
  * Setup root landing page
  *************************************/
@@ -70,9 +75,31 @@ app.get('/sign-up', function(req, res, next){
 });
 
 /**************************************
- * Setup User Signup POST
+ * Setup User Login page
  *************************************/
-app.post('/sign-up', function(req, res, next) {
+app.get('/login', function(req, res){
+    res.render('login');
+});
+
+/****************************************************************************
+ *              SETUP APP POST PAGES
+ * 
+ * **************************************************************************/
+
+/**************************************
+ * Setup 'create' route to check that new post 
+ * form data is sending to proper route
+ *************************************/
+app.post('/create', function(req, res){
+    Post.create(req.body, function(){
+        res.redirect('/posts/all');
+    });
+});
+
+/**************************************
+ * Setup 'add-user' POST route
+ *************************************/
+app.post('/add-user', function(req, res, next) {
     // Create User and JWT
     var user = new User(req.body);
     
@@ -81,23 +108,6 @@ app.post('/sign-up', function(req, res, next) {
     res.redirect('/');
     });
   });
-
-/**************************************
- * Setup User Login page
- *************************************/
-app.get('/login', function(req, res){
-    res.render('login');
-});
-
-/**************************************
- * Setup create route to check that new post 
- * form data is sending to proper route
- *************************************/
-app.post('/create', function(req, res){
-    Post.create(req.body, function(){
-        res.redirect('/posts/all');
-    });
-});
 
 // Listen on port 8082
 app.listen(8082, function () {

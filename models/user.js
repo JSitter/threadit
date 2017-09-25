@@ -10,13 +10,13 @@ createdAt       : { type: Date }
 });
 
 UserSchema.pre('save', function(next){
-console.log("HELP!")
-// SET createdAt AND updatedAt
-var now = new Date();
-this.updatedAt = now;
-if ( !this.createdAt ) {
-this.createdAt = now;
-}
+    // SET createdAt AND updatedAt
+    var now = new Date();
+    this.updatedAt = now;
+    if ( !this.createdAt ) {
+    this.createdAt = now;
+    }
+    next();
 });
 
 module.exports = mongoose.model('User', UserSchema);
