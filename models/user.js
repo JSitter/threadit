@@ -2,11 +2,10 @@ var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-createdAt       : { type: Date }
-, updatedAt       : { type: Date }
-
-, password        : { type: String, select: false }
-, username        : { type: String, required: true }
+createdAt       : { type: Date },
+updatedAt       : { type: Date },
+password        : { type: String, select: false },
+username        : { type: String, required: true }
 });
 
 UserSchema.pre('save', function(next){
