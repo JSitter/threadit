@@ -4,14 +4,13 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var app = express();
 
+
+
 // connect to threadit database
 mongoose.connect('localhost/threadit');
 
 // log database errors to console
 mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection error"));
-
-//Load mongodb User Model
-var User = require('./models/user.js');
 
 /**************************************
  * Setup Mongodb Posts Model
@@ -68,13 +67,6 @@ app.get('/posts/:postID', function(req, res){
 });
 
 /**************************************
- * Setup User Signup page
- *************************************/
-app.get('/sign-up', function(req, res, next){
-    res.render('sign-up');
-});
-
-/**************************************
  * Setup User Login page
  *************************************/
 app.get('/login', function(req, res){
@@ -96,18 +88,7 @@ app.post('/create', function(req, res){
     });
 });
 
-/**************************************
- * Setup 'add-user' POST route
- *************************************/
-app.post('/add-user', function(req, res, next) {
-    // Create User and JWT
-    var user = new User(req.body);
-    
-    user.save(function (err) {
-    if (err) { return res.status(400).send({ err: err }) };
-    res.redirect('/');
-    });
-  });
+var Auth = require('./controllers/auth.js')(app);
 
 // Listen on port 8082
 app.listen(8082, function () {
