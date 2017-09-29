@@ -1,14 +1,17 @@
+/****************************************************
+ *      THREADIT
+ *      V 1.0.0
+ ***************************************************/
+
 var express = require('express');
 var hbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var app = express();
 
-
-
 // connect to threadit database
 mongoose.connect('localhost/threadit');
-
+ 
 // log database errors to console
 mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection error"));
 
@@ -88,6 +91,10 @@ app.post('/create', function(req, res){
     });
 });
 
+/**********************************************
+ * Load external files
+ *********************************************/
+
 var Auth = require('./controllers/auth.js')(app);
 
 // Listen on port 8082
@@ -95,3 +102,4 @@ app.listen(8082, function () {
  console.log('Threaddit listening on port 8082!');
 });
 
+//Create partials to load secions in with

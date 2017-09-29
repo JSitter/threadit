@@ -7,9 +7,6 @@ var User = require('../models/user.js');
 
 module.exports = (app) => {
 
-
-
-
   //Set Secret environment variable
   //This should be set elsewhere on production server
   process.env.SECRET = "sEcReTkEy"
@@ -31,7 +28,7 @@ module.exports = (app) => {
   app.post('/add-user', function(req, res, next) {
     // Create User and JWT
     var user = new User(req.body);
-    console.log(req.body);
+    //console.log(req.body);
 
     // user.save().then((user)=>{
 
@@ -42,11 +39,11 @@ module.exports = (app) => {
     user.save(function (err) {
     if (err) { return res.status(400).send({ err: err }) };
     var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+    
     res.redirect('/');
     });
+
+   
   });
-
-
-
 
 }
