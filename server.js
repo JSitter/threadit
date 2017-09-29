@@ -7,13 +7,18 @@ var express = require('express');
 var hbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 var app = express();
+
 
 // connect to threadit database
 mongoose.connect('localhost/threadit');
  
 // log database errors to console
 mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection error"));
+
+//Use CookieParser in express app
+app.use(cookieParser())
 
 /**************************************
  * Setup Mongodb Posts Model
@@ -34,6 +39,17 @@ app.set('view engine', 'hbs');
  *              SETUP APP LANDING PAGES
  * 
  * **************************************************************************/
+
+/****************************************************
+ *  VIEW SET COOKIES FOR TESTING PURPOSES
+ ***************************************************/
+app.get('/cookies', (req, res) => {
+    res.send(req.cookies);
+});
+
+app.get('/set-cookie', (req, res) => {
+
+})
 
 /**************************************
  * Setup root landing page
@@ -58,13 +74,13 @@ app.get('/posts/all', function(req, res){
     });
 });
 
+
 /**************************************
  * Setup Single post Page
  *************************************/
 app.get('/posts/:postID', function(req, res){
    
     Post.find({_id: req.params.postID}, function(err, post){
-        console.log(post);
         res.render('view-post', {post: post, title:post.post_title});
     });
 });
@@ -99,10 +115,60 @@ app.post('/create', function(req, res){
     });
 });
 
+  /**************************************
+   * Setup 'add-user' POST route
+   *************************************/
+//   app.post('/add-user', function(req, res, next) {
+    
+//         // Create User and JWT
+//         var user = new User(req.body);
+    
+//         //console.log(req.body);
+    
+//         // user.save().then((user)=>{
+    
+//         // }).catch((err)=>{
+    
+//         // });
+//         // mongoose.Promise = global.Promise <- server.js   
+    
+//         user.save(function (err) {
+//           console.log("Save user")
+//           //send 400 on error
+//           if (err) { return res.status(400).send({ err: err }) };
+    
+//           // Encode JWT and set cookie
+//           var token = jwt.sign({ _id: 'sampleuserid' }, process.env.SECRET, { expiresIn: "60 days" });
+//           res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+    
+//           res.redirect('/posts/all');
+//         });
+    
+//       });
+
 /**********************************************
  * Load external files
  *********************************************/
 var Auth = require('./controllers/auth.js')(app);
+
+/****************************************************
+ *  Check JWT for login info
+ ***************************************************/
+var checkAuth = function (req, res, next) {
+    console.log("\n\n*********Checking authentication********\n\n");
+  
+    if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
+      req.user = null;
+    } else {
+      var token = req.cookies.nToken;
+      var decodedToken = jsonwebtoken.decode(token, { complete: true }) || {};
+      req.user = decodedToken.payload;
+    };
+  
+    next();
+  };
+  
+  app.use(checkAuth);
 
 // Listen on port 8082
 app.listen(8082, function () {
