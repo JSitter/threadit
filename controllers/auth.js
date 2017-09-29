@@ -2,7 +2,7 @@
  * Threadit
  *    Auth
  ***************************************************/
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 //Load mongodb User Model
 var User = require('../models/user.js');
@@ -32,17 +32,14 @@ module.exports = (app) => {
     // mongoose.Promise = global.Promise <- server.js   
 
     user.save(function (err) {
-      
-
-      //const cookieParser = require('cookie-parser')
 
       console.log("Save user")
       //send 400 on error
       if (err) { return res.status(400).send({ err: err }) };
-
+      console.log(user.username)
       // Encode JWT and set cookie
-      var token = jwt.sign({ _id: 'sampleuserid' }, process.env.SECRET, { expiresIn: "60 days" });
-      res.cookie('nToken', "token", { maxAge: 900000, httpOnly: true });
+      var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+      res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
       res.redirect('/posts/all');
     });
 
