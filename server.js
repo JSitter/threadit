@@ -39,7 +39,7 @@ app.set('view engine', 'hbs');
  * Setup root landing page
  *************************************/
 app.get('/', function (req, res) {
-    res.render('posts-new', {msg: 'Hello World!'});
+    res.render('all-posts', {msg: 'Welcome!'});
 });
 
 /**************************************
@@ -76,6 +76,14 @@ app.get('/login', function(req, res){
     res.render('login');
 });
 
+/**************************************
+ * Setup User Signup page
+ *************************************/
+  app.get('/sign-up', function(req, res, next){
+    res.render('sign-up');
+    //sign-up.hbs submits form to /add-user defined in auth.js
+  });
+
 /****************************************************************************
  *              SETUP APP POST PAGES
  * 
@@ -94,7 +102,6 @@ app.post('/create', function(req, res){
 /**********************************************
  * Load external files
  *********************************************/
-
 var Auth = require('./controllers/auth.js')(app);
 
 // Listen on port 8082

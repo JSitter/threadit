@@ -1,3 +1,7 @@
+/****************************************************
+ * Threadit
+ *    Auth
+ ***************************************************/
 var jwt = require('jsonwebtoken');
 let user = require('../models/user.js');
 
@@ -10,17 +14,6 @@ module.exports = (app) => {
   //Set Secret environment variable
   //This should be set elsewhere on production server
   process.env.SECRET = "sEcReTkEy"
-
-  /**************************************
-   * Setup User Signup page
-   *************************************/
-  app.get('/sign-up', function(req, res, next){
-    res.render('sign-up');
-  });
-
-  app.get('/add-user', function(req, res, next) {
-    res.render('sign-up', {title: "sign up"})
-  });
 
   /**************************************
    * Setup 'add-user' POST route
@@ -40,7 +33,7 @@ module.exports = (app) => {
     if (err) { return res.status(400).send({ err: err }) };
     var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
     
-    res.redirect('/');
+    res.redirect('/posts/all');
     });
 
    
