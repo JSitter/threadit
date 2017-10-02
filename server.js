@@ -47,10 +47,6 @@ app.get('/cookies', (req, res) => {
     res.send(req.cookies);
 });
 
-app.get('/set-cookie', (req, res) => {
-
-})
-
 /**************************************
  * Setup root landing page
  *************************************/
@@ -155,6 +151,7 @@ var Auth = require('./controllers/auth.js')(app);
  *  Check JWT for login info
  ***************************************************/
 var checkAuth = function (req, res, next) {
+    
     console.log("\n\n*********Checking authentication********\n\n");
   
     if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
@@ -172,7 +169,7 @@ var checkAuth = function (req, res, next) {
 
 // Listen on port 8082
 app.listen(8082, function () {
- console.log('Threaddit listening on port 8082!');
+ console.log('Threadit listening on port 8082!');
 });
 
 //Create partials to load secions in with
