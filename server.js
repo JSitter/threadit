@@ -9,10 +9,14 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 var app = express();
+let jwt = require('jsonwebtoken');
 
 
 // connect to threadit database
 mongoose.connect('localhost/threadit');
+
+//User javascript global promise instead of mongoose's deprecated
+mongoose.Promise = global.Promise
  
 // log database errors to console
 mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection error"));
@@ -35,6 +39,27 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
 
+/****************************************************
+ *  Check login info on every request
+ ***************************************************/
+var checkAuth = function (req, res, next) {
+    
+    console.log("\n\n*********Checking authentication********\n\n");
+  
+    if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
+      req.user = null;
+    } else {
+      var token = req.cookies.nToken;
+      var decodedToken = jwt.decode(token, { complete: true }) || {};
+      req.user = decodedToken.payload;
+    };
+  
+    next();
+  };
+
+//Authenticate Users on every page load
+app.use(checkAuth);
+
 /****************************************************************************
  *              SETUP APP LANDING PAGES
  * 
@@ -51,6 +76,7 @@ app.get('/cookies', (req, res) => {
  * Setup root landing page
  *************************************/
 app.get('/', function (req, res) {
+    console.log(req.cookies);
     res.render('all-posts', {msg: 'Welcome!'});
 });
 
@@ -147,25 +173,9 @@ app.post('/create', function(req, res){
  *********************************************/
 var Auth = require('./controllers/auth.js')(app);
 
-/****************************************************
- *  Check JWT for login info
- ***************************************************/
-var checkAuth = function (req, res, next) {
-    
-    console.log("\n\n*********Checking authentication********\n\n");
+
   
-    if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
-      req.user = null;
-    } else {
-      var token = req.cookies.nToken;
-      var decodedToken = jsonwebtoken.decode(token, { complete: true }) || {};
-      req.user = decodedToken.payload;
-    };
   
-    next();
-  };
-  
-  app.use(checkAuth);
 
 // Listen on port 8082
 app.listen(8082, function () {
