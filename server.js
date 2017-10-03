@@ -91,8 +91,10 @@ app.get('/posts/new', function(req, res){
  * Setup View all posts page
  *************************************/
 app.get('/posts/all', function(req, res){
+    var currentUser = req.user;
+
     Post.find(function(err, posts){
-        res.render('all-posts', { posts: posts, title: "View Posts"});
+        res.render('all-posts', { posts: posts, title: "View Posts", currentUser: currentUser});
     });
 });
 
