@@ -4,7 +4,7 @@
   "description": "A reddit clone for redditting redditors",
   "main": "server.js",
   "scripts": {
-    "test": "test",
+    "test": "mocha --timeout 10000",
     "start": "nodemon server.js"
   },
   "repository": {

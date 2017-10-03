@@ -139,11 +139,11 @@ app.get('/login', function(req, res, next) {
  * Setup User Login Post Functionality
  *************************************/
 app.post('/login', function(req, res, next) {
-    User.findOne({ email: req.body.email }, "+password", function (err, user) {
-      if (!user) { return res.status(401).send({ message: 'Wrong email or password' }) };
+    User.findOne({ username: req.body.username }, "+password", function (err, user) {
+      if (!user) { return res.status(401).send({ message: 'Wrong username or password' }) };
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (!isMatch) {
-          return res.status(401).send({ message: 'Wrong email or password' });
+          return res.status(401).send({ message: 'Wrong Username or password' });
         }
   
         var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
@@ -169,10 +169,10 @@ app.post('/create', function(req, res){
     });
 });
 
-  /**************************************
-   * Setup 'add-user' POST route
-   *************************************/
-    //This function exists in auth.js
+/**************************************
+ * Setup 'add-user' POST route
+ *************************************/
+//This function exists in auth.js
 
 /**********************************************
  * Load external files

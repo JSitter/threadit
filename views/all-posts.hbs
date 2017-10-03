@@ -7,10 +7,12 @@
     </p>
 {{/each}}
 </section>
-{{#if currentUser}}
-    <li><a href="/logout">Logout</a></li>
-  {{else}}
-    <li><a href="/login">Login</a></li>
-    <li><a href="/sign-up">Sign Up</a></li>
-  {{/if}}
-<a href="/posts/new">create new post</a>
+<ul>
+    {{#if currentUser}}
+        <li><a href="/logout">Logout</a></li>
+    {{else}}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/sign-up">Sign Up</a></li>
+    {{/if}}
+    <a href="/posts/new">create new post</a>
+</ul>
