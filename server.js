@@ -91,7 +91,7 @@ app.get('/posts/new', function(req, res){
  * Setup View all posts page
  *************************************/
 app.get('/posts/all', function(req, res){
-    
+
     //get current logged in user id
     var currentUser = req.user;
 
@@ -124,6 +124,15 @@ app.get('/login', function(req, res){
   app.get('/sign-up', function(req, res, next){
     res.render('sign-up');
     //sign-up.hbs submits form to /add-user defined in auth.js
+  });
+
+/**************************************
+ * Setup User Logout page
+ *************************************/
+app.get('/logout', function(req, res, next) {
+    res.clearCookie('nToken');
+  
+    res.redirect('/');
   });
 
 /****************************************************************************
