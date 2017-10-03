@@ -42,7 +42,5 @@ module.exports = (app) => {
       res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
       res.redirect('/posts/all');
     });
-
   });
-
 }

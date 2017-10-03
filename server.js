@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 var app = express();
 let jwt = require('jsonwebtoken');
-
+let User = require('./models/user.js')
 
 // connect to threadit database
 mongoose.connect('localhost/threadit');
@@ -44,7 +44,7 @@ app.set('view engine', 'hbs');
  ***************************************************/
 var checkAuth = function (req, res, next) {
     
-    console.log("\n\n*********Checking authentication********\n\n");
+    console.log("***Authentication Check***");
   
     if (typeof req.cookies.nToken === 'undefined' || req.cookies.nToken === null) {
       req.user = null;
@@ -135,6 +135,32 @@ app.get('/logout', function(req, res, next) {
     res.redirect('/');
   });
 
+/**************************************
+ * Setup User Login Page
+ *************************************/
+app.get('/login', function(req, res, next) {
+    res.render('login');
+  });
+
+/**************************************
+ * Setup User Login Post Functionality
+ *************************************/
+app.post('/login', function(req, res, next) {
+    User.findOne({ email: req.body.email }, "+password", function (err, user) {
+      if (!user) { return res.status(401).send({ message: 'Wrong email or password' }) };
+      user.comparePassword(req.body.password, function (err, isMatch) {
+        if (!isMatch) {
+          return res.status(401).send({ message: 'Wrong email or password' });
+        }
+  
+        var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+        res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+  
+        res.redirect('/');
+      });
+    })
+  });
+
 /****************************************************************************
  *              SETUP APP POST PAGES
  * 
@@ -153,33 +179,7 @@ app.post('/create', function(req, res){
   /**************************************
    * Setup 'add-user' POST route
    *************************************/
-//   app.post('/add-user', function(req, res, next) {
-    
-//         // Create User and JWT
-//         var user = new User(req.body);
-    
-//         //console.log(req.body);
-    
-//         // user.save().then((user)=>{
-    
-//         // }).catch((err)=>{
-    
-//         // });
-//         // mongoose.Promise = global.Promise <- server.js   
-    
-//         user.save(function (err) {
-//           console.log("Save user")
-//           //send 400 on error
-//           if (err) { return res.status(400).send({ err: err }) };
-    
-//           // Encode JWT and set cookie
-//           var token = jwt.sign({ _id: 'sampleuserid' }, process.env.SECRET, { expiresIn: "60 days" });
-//           res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-    
-//           res.redirect('/posts/all');
-//         });
-    
-//       });
+    //This function exists in auth.js
 
 /**********************************************
  * Load external files
