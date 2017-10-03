@@ -28,10 +28,11 @@ app.use(cookieParser())
  * Setup Mongodb Posts Model
  *************************************/
 var Post = mongoose.model('Post', {
-    title:  String,
-    url:    String,
-    summary:String,
-    content:String,
+    title:      String,
+    url:        String,
+    summary:    String,
+    content:    String,
+    subreddit:  { type: String, required: true }
 });
 
 //Add bodyParser to App to get post data
@@ -79,7 +80,7 @@ app.get('/cookies', (req, res) => {
  *************************************/
 app.get('/', function (req, res) {
     //console.log(req.cookies);
-    
+
     //get current logged in user id
     var currentUser = req.user;
 
@@ -161,6 +162,16 @@ app.post('/login', function(req, res, next) {
       });
     })
   });
+
+/**************************************
+ * Setup Subreddits
+ *************************************/
+app.get('/n/:subreddit', function(req, res) {
+    Post.find({ subreddit: req.params.subreddit }, function(err, posts){
+        console.log(posts)
+        res.render('posts-index', { posts: posts , title: req.params.subreddit});
+    })
+});
 
 /****************************************************************************
  *              SETUP APP POST PAGES
