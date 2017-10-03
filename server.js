@@ -91,6 +91,8 @@ app.get('/posts/new', function(req, res){
  * Setup View all posts page
  *************************************/
 app.get('/posts/all', function(req, res){
+    
+    //get current logged in user id
     var currentUser = req.user;
 
     Post.find(function(err, posts){
