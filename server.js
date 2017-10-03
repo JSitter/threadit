@@ -78,8 +78,14 @@ app.get('/cookies', (req, res) => {
  * Setup root landing page
  *************************************/
 app.get('/', function (req, res) {
-    console.log(req.cookies);
-    res.render('all-posts', {msg: 'Welcome!'});
+    //console.log(req.cookies);
+    
+    //get current logged in user id
+    var currentUser = req.user;
+
+    Post.find().exec(function (err, posts) {
+        res.render('posts-index', { posts: posts , title: "Welcome to Threadit!", currentUser: currentUser});
+      });
 });
 
 /**************************************
