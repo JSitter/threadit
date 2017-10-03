@@ -40,7 +40,7 @@ app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
 
 /****************************************************
- *  Check login info on every request
+ *  Check for login token on every request
  ***************************************************/
 var checkAuth = function (req, res, next) {
     
@@ -112,13 +112,6 @@ app.get('/posts/:postID', function(req, res){
 });
 
 /**************************************
- * Setup User Login page
- *************************************/
-app.get('/login', function(req, res){
-    res.render('login');
-});
-
-/**************************************
  * Setup User Signup page
  *************************************/
   app.get('/sign-up', function(req, res, next){
@@ -186,13 +179,7 @@ app.post('/create', function(req, res){
  *********************************************/
 var Auth = require('./controllers/auth.js')(app);
 
-
-  
-  
-
 // Listen on port 8082
 app.listen(8082, function () {
  console.log('Threadit listening on port 8082!');
 });
-
-//Create partials to load secions in with
