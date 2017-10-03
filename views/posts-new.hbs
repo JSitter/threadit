@@ -1,23 +1,28 @@
 <h1>Create New Post</h1>
-<form action="/create">
-      <legend>New Post</legend>
-      <div class="form-group">
+<form method="POST" action="/create">
+    <legend>New Post</legend>
+
+    <div class="form-group">
         <label for="post-title">Title</label>
         <input type="text" name="title" class="form-control" id="post-title" placeholder="Title">
-      </div>
-      <div class="form-group">
+    </div>
+
+    <div class="form-group">
         <label for="post-url">Url</label>
         <input type="url" name="url" class="form-control" id="post-url" placeholder="https://www.google.com">
-      </div>
-      <div class="form-group">
+    </div>
+
+    <div class="form-group">
         <label for="post-summary">Summary</label>
         <textarea name="summary" class="form-control" id="post-summary" placeholder="Title"></textarea>
-      </div>
+    </div>
 
-      <div class='text-right'>
-        <button type="submit" class="btn btn-primary">Reply</button>
-      </div>
-
+   <div class="form-group">
+        <label class="input-label" for="content">Content</label>
+        <textarea name="content" id="content_text" cols="100" rows="10"></textarea>
+    </div>
+    <button type="submit">Save Post</button>
+    
 </form>
 <small>
     By using this site you agree to the following terms of service:

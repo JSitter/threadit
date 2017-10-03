@@ -1,7 +1,8 @@
 <a href="/posts/all">Home</a>
 {{#each post}}
-<h1>{{this.post_title}}</h1>
-<p>
-    {{this.post_content}}
-</p>
+<h1>{{this.title}}</h1>
+<p>{{this.url}}</p>
+<div>
+    {{this.content}}
+</div>
 {{/each}}

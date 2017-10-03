@@ -28,8 +28,10 @@ app.use(cookieParser())
  * Setup Mongodb Posts Model
  *************************************/
 var Post = mongoose.model('Post', {
-    post_title: String,
-    post_content: String,
+    title:  String,
+    url:    String,
+    summary:String,
+    content:String,
 });
 
 //Add bodyParser to App to get post data
@@ -164,6 +166,7 @@ app.post('/login', function(req, res, next) {
  * form data is sending to proper route
  *************************************/
 app.post('/create', function(req, res){
+    console.log(req.body)
     Post.create(req.body, function(){
         res.redirect('/posts/all');
     });

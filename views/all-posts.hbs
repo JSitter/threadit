@@ -1,10 +1,11 @@
 <h1>All Posts</h1>
 <section>
 {{#each posts}}
-    <h3><a href="/posts/{{this._id}}">{{this.post_title}}</a></h3>
-    <p>
-        {{this.post_content}}
-    </p>
+    <article>
+        <h3><a href="/posts/{{this._id}}">{{this.title}}</a></h3>
+        <p>{{this.url}}</p>
+        <div>{{this.summary}}</div>
+    </article>
 {{/each}}
 </section>
 <ul>
