@@ -5,7 +5,7 @@
     <p>{{post.url}}</p>
 
 
-    <div class="text-right">{{post.subreddit}}</div>
+    <div class="text-right"> <a href="/n/{{post.subreddit}}"> /n/{{post.subreddit}}</a></div>
 
     <div>
         {{post.content}}
@@ -19,6 +19,5 @@
     </form>
 
     {{#each post.comments}}   
-    <p>{{this}}</p>
+    <p>{{this.comment}}</p>
     {{/each}}
-    <p>view post</p>

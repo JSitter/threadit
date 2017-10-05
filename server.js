@@ -161,13 +161,13 @@ app.get('/n/:subreddit', function(req, res) {
  *************************************/
 app.get('/posts/:postID', function(req, res, next){
 
-    Post.findById(req.params.postID).then((post)=>{
+    Post.findById(req.params.postID).populate( 'comments' ).exec().then( (post)=>{
+        console.log(post);
         res.render('view-post',  { post } );
-    }).catch((err)=>{
-        console.log(err)
-        //res.redirect("/404")
-    })
-
+    }).catch(( err )=>{
+        console.log( err );
+        //res.redirect("/404"...)
+    });
  });
  
 /**************************************
