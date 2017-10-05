@@ -176,7 +176,7 @@ app.post('/posts/:postID/comments', function (req, res) {
     Post.findById(req.params.postID).exec(function (err, post) {
         
         comment.save(function (err, comment) {
-            console.log("comment",post)
+            console.log("comment",comment)
             post.comments.unshift(comment);
             post.save();
     
