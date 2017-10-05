@@ -160,9 +160,14 @@ app.get('/n/:subreddit', function(req, res) {
  * Setup Single post Page
  *************************************/
 app.get('/posts/:postID', function(req, res, next){
-     Post.find({_id: req.params.postID}, function(err, post){
-         res.render('view-post', { post, title : post.post_title, postID : req.params.postID });
-     });
+
+    Post.findById(req.params.postID).then((post)=>{
+        res.render('view-post',  { post } );
+    }).catch((err)=>{
+        console.log(err)
+        //res.redirect("/404")
+    })
+
  });
  
 /**************************************

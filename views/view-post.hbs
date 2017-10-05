@@ -1,23 +1,24 @@
 <a href="/">Home</a>
 
-{{#each post}}
-<h1>{{this.title}}</h1>
+    <h1>{{post.title}}</h1>
 
-<p>{{this.url}}</p>
+    <p>{{post.url}}</p>
 
-<a href="/n/{{this.subreddit}}">/n/{{this.subreddit}}</a>
 
-<div class="text-right">{{this.subreddit}}</div>
+    <div class="text-right">{{post.subreddit}}</div>
 
-<div>
-    {{this.content}}
-</div>
-
-<form action="/posts/{{this._id}}/comments" method="POST" >
-    <textarea class='form-control' name="comment" placeholder="Comment"></textarea>
-    <div class="text-right">
-        <button type="submit">Save</button>
+    <div>
+        {{post.content}}
     </div>
-</form>
 
-{{/each}}
+    <form action="/posts/{{post._id}}/comments" method="POST" >
+        <textarea class='form-control' name="comment" placeholder="Comment"></textarea>
+        <div class="text-right">
+            <button type="submit">Save</button>
+        </div>
+    </form>
+
+    {{#each post.comments}}   
+    <p>{{this}}</p>
+    {{/each}}
+    <p>view post</p>
