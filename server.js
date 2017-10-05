@@ -36,6 +36,7 @@ const Post = mongoose.model('Post', {
     url:        String,
     summary:    String,
     content:    String,
+    comments:   [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     subreddit:  { type: String, required: true }
 });
 
@@ -182,15 +183,18 @@ app.get('/posts/:postID', function(req, res, next){
 app.post('/posts/:postID/comments', function (req, res) {
 
     // INSTANTIATE INSTANCE OF MODEL
-    const comment = new Comment({
-        comment: req.body.comment_body
-    });
-
-    // SAVE INSTANCE OF POST MODEL TO DB
-    comment.save(function (err, comment) {
-      // REDIRECT TO THE ROOT
-      return res.redirect('/posts/'+req.params.postID);
-    });
+    const comment = new Comment(req.body);
+    
+    Post.findById(req.params.postID).exec(function (err, post) {
+        
+        comment.save(function (err, comment) {
+            console.log("comment",post)
+            post.comments.unshift(comment);
+            post.save();
+    
+          return res.redirect(`/posts/` + post._id);
+        })
+      });
   });
 
 /****************************************************************************
