@@ -182,7 +182,7 @@ app.get('/posts/:postID', function(req, res, next){
 app.post('/posts/:postID/comments', function (req, res) {
 
     // INSTANTIATE INSTANCE OF MODEL
-    var comment = new Comment({
+    const comment = new Comment({
         comment: req.body.comment_body
     });
 
