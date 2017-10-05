@@ -3,13 +3,13 @@
  *      V 1.0.0
  ***************************************************/
 
-var express = require('express');
-var hbs = require('express-handlebars');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
+const express = require('express');
+const hbs = require('express-handlebars');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
-var app = express();
-let jwt = require('jsonwebtoken');
+const app = express();
+const jwt = require('jsonwebtoken');
 
 //Require Models
 const User = require('./models/user.js')
@@ -31,7 +31,7 @@ app.use(cookieParser())
 /**************************************
  * Setup Mongodb Posts Model
  *************************************/
-var Post = mongoose.model('Post', {
+const Post = mongoose.model('Post', {
     title:      String,
     url:        String,
     summary:    String,
@@ -177,25 +177,21 @@ app.get('/posts/:postID', function(req, res, next){
  });
  
 /**************************************
- * Setup comments
+ * retrieve submitted comments
  *************************************/
 app.post('/posts/:postID/comments', function (req, res) {
 
     // INSTANTIATE INSTANCE OF MODEL
-    console.log("paramate", req.params)
-    console.log("comment",req.body.comment_body);
     var comment = new Comment({
         comment: req.body.comment_body
     });
 
     // SAVE INSTANCE OF POST MODEL TO DB
-    //console.log(req.body)
     comment.save(function (err, comment) {
       // REDIRECT TO THE ROOT
       return res.redirect('/posts/'+req.params.postID);
     });
   });
-
 
 /****************************************************************************
  *              SETUP APP POST PAGES
