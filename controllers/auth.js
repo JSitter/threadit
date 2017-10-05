@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 //Load mongodb User Model
 var User = require('../models/user.js');
 
-
 module.exports = (app) => {
 
   //Set Secret environment variable
@@ -34,9 +33,11 @@ module.exports = (app) => {
     user.save(function (err) {
 
       console.log("Save user")
+
       //send 400 on error
       if (err) { return res.status(400).send({ err: err }) };
       console.log(user.username)
+      
       // Encode JWT and set cookie
       var token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
       res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });

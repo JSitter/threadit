@@ -10,7 +10,10 @@ var bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 var app = express();
 let jwt = require('jsonwebtoken');
-let User = require('./models/user.js')
+
+//Require Models
+const User = require('./models/user.js')
+const Comment = require('./models/comment.js');
 
 // connect to threadit database
 mongoose.connect('localhost/threadit');
@@ -173,6 +176,25 @@ app.get('/n/:subreddit', function(req, res) {
     })
 });
 
+/**************************************
+ * Setup comments
+ *************************************/
+app.post('/posts/:postId/comments', function (req, res) {
+    // INSTANTIATE INSTANCE OF MODEL
+    console.log(req.body.comment_body)
+    var comment = new Comment({
+        comment: req.body.comment_body
+    });
+
+    // SAVE INSTANCE OF POST MODEL TO DB
+    console.log(req.body)
+    comment.save(function (err, comment) {
+      // REDIRECT TO THE ROOT
+      return res.redirect('/');
+    })
+  });
+
+
 /****************************************************************************
  *              SETUP APP POST PAGES
  * 
@@ -183,7 +205,7 @@ app.get('/n/:subreddit', function(req, res) {
  * form data is sending to proper route
  *************************************/
 app.post('/create', function(req, res){
-    console.log(req.body)
+    //console.log(req.body)
     Post.create(req.body, function(){
         res.redirect('/posts/all');
     });

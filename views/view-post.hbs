@@ -1,4 +1,4 @@
-<a href="/posts/all">Home</a>
+<a href="/">Home</a>
 {{#each post}}
 <h1>{{this.title}}</h1>
 <p>{{this.url}}</p>
@@ -7,4 +7,10 @@
 <div>
     {{this.content}}
 </div>
+<form action="/posts/{{this._id}}/comments" method="POST" >
+    <textarea class='form-control' name="comment_body" placeholder="Comment"></textarea>
+    <div class="text-right">
+        <button type="submit">Save</button>
+    </div>
+</form>
 {{/each}}
