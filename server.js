@@ -27,6 +27,7 @@ mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection 
 //Use CookieParser in express app
 app.use(cookieParser())
 
+//Move this block to ../models/post.js
 /**************************************
  * Setup Mongodb Posts Model
  *************************************/
@@ -114,21 +115,11 @@ app.get('/posts/all', function(req, res){
 
 
 /**************************************
- * Setup Single post Page
- *************************************/
-app.get('/posts/:postID', function(req, res){
-   
-    Post.find({_id: req.params.postID}, function(err, post){
-        res.render('view-post', {post: post, title:post.post_title});
-    });
-});
-
-/**************************************
  * Setup User Signup page
  *************************************/
   app.get('/sign-up', function(req, res, next){
+      //sign-up.hbs submits form to /add-user defined in auth.js
     res.render('sign-up');
-    //sign-up.hbs submits form to /add-user defined in auth.js
   });
 
 /**************************************
@@ -177,21 +168,32 @@ app.get('/n/:subreddit', function(req, res) {
 });
 
 /**************************************
+ * Setup Single post Page
+ *************************************/
+app.get('/posts/:postID', function(req, res, next){
+     Post.find({_id: req.params.postID}, function(err, post){
+         res.render('view-post', { post, title : post.post_title, postID : req.params.postID });
+     });
+ });
+ 
+/**************************************
  * Setup comments
  *************************************/
-app.post('/posts/:postId/comments', function (req, res) {
+app.post('/posts/:postID/comments', function (req, res) {
+
     // INSTANTIATE INSTANCE OF MODEL
-    console.log(req.body.comment_body)
+    console.log("paramate", req.params)
+    console.log("comment",req.body.comment_body);
     var comment = new Comment({
         comment: req.body.comment_body
     });
 
     // SAVE INSTANCE OF POST MODEL TO DB
-    console.log(req.body)
+    //console.log(req.body)
     comment.save(function (err, comment) {
       // REDIRECT TO THE ROOT
-      return res.redirect('/');
-    })
+      return res.redirect('/posts/'+req.params.postID);
+    });
   });
 
 
