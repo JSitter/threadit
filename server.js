@@ -12,33 +12,21 @@ const app = express();
 const jwt = require('jsonwebtoken');
 
 //Require Models
-const User = require('./models/user.js')
+const User = require('./models/user.js');
 const Comment = require('./models/comment.js');
+const Post = require('./models/post.js');
 
 // connect to threadit database
 mongoose.connect('localhost/threadit');
 
 //User javascript global promise instead of mongoose's deprecated
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise;
  
 // log database errors to console
 mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection error"));
 
 //Use CookieParser in express app
-app.use(cookieParser())
-
-//Move this block to ../models/post.js
-/**************************************
- * Setup Mongodb Posts Model
- *************************************/
-const Post = mongoose.model('Post', {
-    title:      String,
-    url:        String,
-    summary:    String,
-    content:    String,
-    comments:   [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-    subreddit:  { type: String, required: true }
-});
+app.use(cookieParser());
 
 //Add bodyParser to App to get post data
 app.use(bodyParser.urlencoded({extended: true}));
