@@ -172,7 +172,7 @@ app.post('/posts/:postID/comments', function (req, res) {
 
     // INSTANTIATE INSTANCE OF MODEL
     const comment = new Comment(req.body);
-    
+    console.log("new comment body:", req.body)
     Post.findById(req.params.postID).exec(function (err, post) {
         
         comment.save(function (err, comment) {
