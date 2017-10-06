@@ -9,7 +9,6 @@ const PostSchema = new Schema({
     url         : String,
     summary     : String,
     content     : String,
-    author      : { type: Schema.Types.ObjectId, ref: 'User', required: true },
     comments    : [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     subreddit   : { type: String, required: true }
 });

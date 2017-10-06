@@ -13,7 +13,6 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
     createdAt       : { type: Date },
     updatedAt       : { type: Date },
-    author          : { type: Schema.Types.ObjectId, ref: 'User', required: true },
     password        : { type: String, select: false },
     username        : { type: String, required: true }
 });
