@@ -42,8 +42,8 @@ module.exports = (app) => {
         });
 
     /**************************************
-     * Setup 'create' route to check that new post 
-     * form data is sending to proper route
+     * Setup 'create' to create new post
+     * from user input
      *************************************/
     app.post('/create', function(req, res){
         //console.log(req.body)
