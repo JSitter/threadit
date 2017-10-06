@@ -16,7 +16,6 @@ const User = require('./models/user.js');
 const Comment = require('./models/comment.js');
 const Post = require('./models/post.js');
 
-//Require Controllers
 
 
 // connect to threadit database
@@ -37,6 +36,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Setup handlebars view engine and pass in parameters
 app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
+
+
 
 /****************************************************
  *  Check for login token on every request
@@ -138,6 +139,13 @@ app.get('/n/:subreddit', function(req, res) {
     })
 });
 
+
+/**************************************
+ * Setup Error Page
+ *************************************/
+app.get('/error', (req, res)=>{
+  res.render('error-page')
+})
 /**************************************
  * Setup 'add-user' POST route
  *************************************/
@@ -147,7 +155,7 @@ app.get('/n/:subreddit', function(req, res) {
  * Load Controllers
  *********************************************/
 const Auth = require('./controllers/auth.js')(app);
-const postController = require('./controller/post.js')(app)
+require('./controllers/post.js')(app)
 
 // Listen on port 8082
 app.listen(8082, function () {

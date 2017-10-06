@@ -4,19 +4,22 @@
  ***************************************************/
 module.exports = (app) => {
 
-    //Load mongodb Post Model
+    //Load mongodb Models
     const Post = require('../models/post.js')
+    const Comment = require('../models/comment.js');
+    const User = require('../models/user.js');
+
     /**************************************
      * Setup Single post Page
      *************************************/
-    app.get('/posts/:postID', function(req, res, next){
+    app.get('/posts/:postID', function(req, res){
         
             Post.findById(req.params.postID).populate( 'comments' ).exec().then( (post)=>{
-                console.log(post);
                 res.render('view-post',  { post } );
             }).catch(( err )=>{
-                console.log( err );
+                console.log( "\n*******Error getting post ******** \n",err.stack );
                 //res.redirect("/404"...)
+                res.redirect("/error")
             });
         });
 
@@ -27,11 +30,10 @@ module.exports = (app) => {
         
             // INSTANTIATE INSTANCE OF MODEL
             const comment = new Comment(req.body);
-            console.log("new comment body:", req.body)
             Post.findById(req.params.postID).exec(function (err, post) {
                 
                 comment.save(function (err, comment) {
-                    console.log("comment",comment)
+                    //console.log("comment",comment)
                     post.comments.unshift(comment);
                     post.save();
             
@@ -67,7 +69,7 @@ module.exports = (app) => {
     /**************************************
      * Setup posts/new landing page
      *************************************/
-    app.get('/posts/new', function(req, res){
+    app.get('/post/new', function(req, res){
         res.render('posts-new', {title: "Create Post"});
     });
 
