@@ -11,7 +11,7 @@
         {{post.content}}
     </div>
 
-    <form action="/posts/{{post._id}}/comments" method="POST" >
+    <form action="/post/{{post._id}}/comments" method="POST" >
         <textarea class='form-control' name="comment" placeholder="Comment"></textarea>
         <div class="text-right">
             <button type="submit">Save</button>

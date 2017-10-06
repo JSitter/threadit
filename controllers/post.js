@@ -12,21 +12,20 @@ module.exports = (app) => {
     /**************************************
      * Setup Single post Page
      *************************************/
-    app.get('/posts/:postID', function(req, res){
+    app.get('/post/:postID', function(req, res){
         
             Post.findById(req.params.postID).populate( 'comments' ).exec().then( (post)=>{
                 res.render('view-post',  { post } );
             }).catch(( err )=>{
                 console.log( "\n*******Error getting post ******** \n",err.stack );
-                //res.redirect("/404"...)
-                res.redirect("/error")
+                res.status(404).redirect("/error")
             });
         });
 
     /**************************************
      * retrieve submitted comments
      *************************************/
-    app.post('/posts/:postID/comments', function (req, res) {
+    app.post('/post/:postID/comments', function (req, res) {
         
             // INSTANTIATE INSTANCE OF MODEL
             const comment = new Comment(req.body);
@@ -69,7 +68,7 @@ module.exports = (app) => {
     /**************************************
      * Setup posts/new landing page
      *************************************/
-    app.get('/post/new', function(req, res){
+    app.get('/posts/new', function(req, res){
         res.render('posts-new', {title: "Create Post"});
     });
 
