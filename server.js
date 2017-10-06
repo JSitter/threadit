@@ -214,7 +214,7 @@ app.post('/create', function(req, res){
 /**********************************************
  * Load external files
  *********************************************/
-var Auth = require('./controllers/auth.js')(app);
+const Auth = require('./controllers/auth.js')(app);
 
 // Listen on port 8082
 app.listen(8082, function () {
