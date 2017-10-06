@@ -16,8 +16,6 @@ const User = require('./models/user.js');
 const Comment = require('./models/comment.js');
 const Post = require('./models/post.js');
 
-
-
 // connect to threadit database
 mongoose.connect('localhost/threadit');
 
@@ -36,8 +34,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Setup handlebars view engine and pass in parameters
 app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs'}));
 app.set('view engine', 'hbs');
-
-
 
 /****************************************************
  *  Check for login token on every request
@@ -138,7 +134,6 @@ app.get('/n/:subreddit', function(req, res) {
         res.render('posts-index', { posts: posts , title: req.params.subreddit});
     })
 });
-
 
 /**************************************
  * Setup Error Page
