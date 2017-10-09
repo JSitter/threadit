@@ -44,8 +44,6 @@ module.exports = (app) => {
             console.log(err.stack);
         })
 
-
-
         //   Post.findById(req.params.postID).exec(function (err, post) {
         //       /// ?????
         //     comment.save(function (err, comment) {
@@ -66,14 +64,34 @@ module.exports = (app) => {
      *************************************/
     app.post('/create', function(req, res){
         //console.log(req.body)
-        Post.create(req.body, function(err, post){
-            if(err){
-                console.log("Funny, there was an error creating your post:\n",err.stack)
-                res.redirect("/error", {error: err.stack})
-            }
-            
-        });
-        res.redirect('/');
+        const currentUser = req.user;
+        if(currentUser === null ){
+            res.redirect('/login')
+        }
+
+        const title = req.body.title
+        const url = req.body.url
+        const subreddit = req.body.subreddit
+        const summary = req.body.summary
+        const content = req.body.content
+        const user = req.user._id
+        
+        Post.create({
+            title,
+            url,
+            summary,
+            content,
+            subreddit,
+            author:user
+        }).then((post)=>{
+            return post.save()
+        }).then((post)=>{
+            console.log("Post saved")
+            res.redirect(`/post/${post._id}`)
+        }).catch((err)=>{
+            console.log(err.stack)
+        })
+
     });
 
     /**************************************
@@ -93,6 +111,9 @@ module.exports = (app) => {
      * Setup posts/new landing page
      *************************************/
     app.get('/posts/new', function(req, res){
+            //get current logged in user id
+        var currentUser = req.user;
+        console.log(currentUser)
         res.render('posts-new', {title: "Create Post"});
     });
 
