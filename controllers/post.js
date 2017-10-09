@@ -18,7 +18,7 @@ module.exports = (app) => {
                 res.render('view-post',  { post } );
             }).catch(( err )=>{
                 console.log( "\n*******Error getting post ******** \n",err.stack );
-                res.status(404).redirect("/error")
+                res.status(404).render("/error")
             });
         });
 
