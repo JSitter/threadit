@@ -6,7 +6,7 @@
 
 
     <div class="text-right"> <a href="/n/{{post.subreddit}}"> /n/{{post.subreddit}}</a></div>
-
+    <p>{{post.author.username}}</p>
     <div>
         {{post.content}}
     </div>
@@ -19,7 +19,8 @@
     </form>
 
     {{#each post.comments}} 
-    <div>  
+    <div class="comment">
+        <p>{{this.author.username}}</p>  
        <p> {{this.comment}}</p>
     </div>
     {{/each}}

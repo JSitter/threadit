@@ -14,10 +14,20 @@ module.exports = (app) => {
      *************************************/
     app.get('/post/:postID', function(req, res){
         
-            Post.findById(req.params.postID).populate( 'comments' ).exec().then( (post)=>{
+            Post.findById(req.params.postID).populate( 
+                {
+                    path: 'comments',
+                    model: 'Comment',
+                    populate: {
+                      path: 'author',
+                      model: 'User'
+                    }
+                }
+             ).populate('author').then( (post)=>{
+                console.log("Post id path")
                 res.render('view-post',  { post } );
             }).catch(( err )=>{
-                console.log( "\n*******Error getting post ******** \n",err.stack );
+                console.log( "\n*******Error getting post ******** \n",err.message );
                 res.status(404).render("/error", {error: err.message})
             });
         });
