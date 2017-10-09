@@ -27,18 +27,37 @@ module.exports = (app) => {
      *************************************/
     app.post('/post/:postID/comments', function (req, res) {
         
-            // INSTANTIATE INSTANCE OF MODEL
-            const comment = new Comment(req.body);
-            Post.findById(req.params.postID).exec(function (err, post) {
-                
-                comment.save(function (err, comment) {
-                    //console.log("comment",comment)
-                    post.comments.unshift(comment);
-                    post.save();
-            
-                return res.redirect(`/post/` + post._id);
-                })
-            });
+        var comment = new Comment(req.body);
+        console.log("post comments", req.body)
+        console.log("Post ID", req.params.postID)
+
+        let post;
+        Post.findById(req.params.postID).then((p)=>{
+            post = p;
+            return comment.save()
+        }).then((comment)=>{
+            post.comments.unshift(comment)
+            return post.save();
+        }).then((post)=>{
+            res.redirect(`/post/${post._id}`)
+        }).catch((err)=>{
+            console.log(err.stack);
+        })
+
+
+
+        //   Post.findById(req.params.postID).exec(function (err, post) {
+        //       /// ?????
+        //     comment.save(function (err, comment) {
+
+        //         // ????
+        //         console.log("comment:",comment)
+        //       post.comments.unshift(comment);
+        //       post.save(); // ???
+        
+        //       return res.redirect(`/post/` + post._id);
+        //     })
+        //   })
         });
 
     /**************************************
