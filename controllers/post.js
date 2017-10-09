@@ -36,7 +36,7 @@ module.exports = (app) => {
                     post.comments.unshift(comment);
                     post.save();
             
-                return res.redirect(`/posts/` + post._id);
+                return res.redirect(`/post/` + post._id);
                 })
             });
         });
