@@ -18,7 +18,7 @@ module.exports = (app) => {
                 res.render('view-post',  { post } );
             }).catch(( err )=>{
                 console.log( "\n*******Error getting post ******** \n",err.stack );
-                res.status(404).render("/error")
+                res.status(404).render("/error", {error: err.message})
             });
         });
 
@@ -46,7 +46,7 @@ module.exports = (app) => {
         }).then((post)=>{
             res.redirect(`/post/${post._id}`)
         }).catch((err)=>{
-            console.log("comment error: ", err.stack);
+            console.log("**Error creating comment: ", err.message);
         })
 
     });
@@ -84,7 +84,7 @@ module.exports = (app) => {
             console.log("Post saved")
             res.redirect(`/post/${post._id}`)
         }).catch((err)=>{
-            console.log(err.stack)
+            console.log("**Error creating post ", err.message)
         })
     });
 
