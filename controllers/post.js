@@ -47,9 +47,14 @@ module.exports = (app) => {
      *************************************/
     app.post('/create', function(req, res){
         //console.log(req.body)
-        Post.create(req.body, function(){
-            res.redirect('/posts/all');
+        Post.create(req.body, function(err, post){
+            if(err){
+                console.log("Funny, there was an error creating your post:\n",err.stack)
+                res.redirect("/error", {error: err.stack})
+            }
+            
         });
+        res.redirect('/');
     });
 
     /**************************************
