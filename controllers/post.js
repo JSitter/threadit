@@ -27,36 +27,29 @@ module.exports = (app) => {
      *************************************/
     app.post('/post/:postID/comments', function (req, res) {
         
-        var comment = new Comment(req.body);
-        console.log("post comments", req.body)
-        console.log("Post ID", req.params.postID)
+        if(req.user === null ){
+            res.redirect('/login')
+        }
 
         let post;
+
         Post.findById(req.params.postID).then((p)=>{
             post = p;
-            return comment.save()
+            const author = req.user._id
+            const comment = req.body.comment
+
+            let commentObj = new Comment({ comment, author });
+            return commentObj.save()
         }).then((comment)=>{
             post.comments.unshift(comment)
             return post.save();
         }).then((post)=>{
             res.redirect(`/post/${post._id}`)
         }).catch((err)=>{
-            console.log(err.stack);
+            console.log("comment error: ", err.stack);
         })
 
-        //   Post.findById(req.params.postID).exec(function (err, post) {
-        //       /// ?????
-        //     comment.save(function (err, comment) {
-
-        //         // ????
-        //         console.log("comment:",comment)
-        //       post.comments.unshift(comment);
-        //       post.save(); // ???
-        
-        //       return res.redirect(`/post/` + post._id);
-        //     })
-        //   })
-        });
+    });
 
     /**************************************
      * Setup 'create' to create new post
@@ -65,6 +58,8 @@ module.exports = (app) => {
     app.post('/create', function(req, res){
         //console.log(req.body)
         const currentUser = req.user;
+
+        //if user isn't logged in redirect to login page
         if(currentUser === null ){
             res.redirect('/login')
         }
@@ -91,7 +86,6 @@ module.exports = (app) => {
         }).catch((err)=>{
             console.log(err.stack)
         })
-
     });
 
     /**************************************
