@@ -28,6 +28,9 @@ mongoose.connection.on('error', console.error.bind(console, "MongoDB Connection 
 //Use CookieParser in express app
 app.use(cookieParser());
 
+// Set up a static directory
+app.use(express.static('public'));
+
 //Add bodyParser to App to get post data
 app.use(bodyParser.urlencoded({extended: true}));
 

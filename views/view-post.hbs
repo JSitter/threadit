@@ -8,9 +8,24 @@
     <div class="text-right"> <a href="/n/{{post.subreddit}}"> /n/{{post.subreddit}}</a></div>
     <p class="username">Posted by {{post.author.username}}</p>
     <div>
+        <li class="list-group-item">
+            <div class="lead">{{post.title}}</div>
+                <a href="{{post.url}}" target="_blank">{{post.url}}<a>
+            <div class="text-right">
+                <a href="/n/{{post.subreddit}}">{{post.subreddit}}<a>
+            </div>
+
+            <form class="vote-up" data-id="{{post._id}}">
+                <button type="submit">Vote Up</button>
+            </form>
+            |
+            <form class="vote-down" data-id="{{post._id}}">
+                <button type="submit">Vote Down</button>
+            </form>
+        </li>   
         {{post.content}}
     </div>
-
+    <div class="clack">CLICK ME!</div>
     <form action="/post/{{post._id}}/comments" method="POST" >
         <textarea class='form-control' name="comment" placeholder="Comment"></textarea>
         <div class="text-right">
