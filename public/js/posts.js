@@ -13,7 +13,7 @@ $(document).ready(function() {
         var postId = $(this).data('id');
         $.ajax({
           type: 'PUT',
-          url: 'posts/' + postId + '/vote-up',
+          url: '/posts/' +postId + '/vote-up',
           success: function(data) {
             console.log("voted up!");
           },
@@ -29,7 +29,7 @@ $(document).ready(function() {
         var postId = $(this).data('id');
         $.ajax({
           type: 'PUT',
-          url: 'posts/' + postId + '/vote-down',
+          url: '/posts/' + postId + '/vote-down',
           success: function(data) {
             console.log("voted down!");
           },
