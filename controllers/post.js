@@ -10,19 +10,18 @@ module.exports = (app) => {
     const User = require('../models/user.js');
 
     app.put('/posts/:id/vote-up', function (req, res) {
-        // console.log(req.params.id)
+        //check if user is logged in
         if( !req.user ){
             console.log("User must be signed in to vote.")
             res.status(400).send("User not signed in")
         }else{
             Post.findById(req.params.id).then(()=>{
                 
-                            //check if user is logged in
-                            console.log("upvoat uid:", req.user._id)
-                        }).catch((err)=>{
-                            console.log("upvote error:",err.message)
-                            res.status(400).send(err.message)
-                        })
+                console.log("upvoat uid:", req.user._id)
+            }).catch((err)=>{
+                console.log("upvote error:",err.message)
+                res.status(400).send(err.message)
+            })
         }
 
 
