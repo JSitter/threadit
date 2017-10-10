@@ -14,6 +14,6 @@ const PostSchema = new Schema({
     author      : { type: Schema.Types.ObjectId, ref: 'User' },
     upVotes     : { type: String },
     downVotes   : { type: String },
-    voteScore   : Number
+    voteScore   : { type: Number, default: 0 }
 });
 module.exports = mongoose.model('Post', PostSchema);

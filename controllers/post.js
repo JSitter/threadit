@@ -10,14 +10,24 @@ module.exports = (app) => {
     const User = require('../models/user.js');
 
     app.put('/posts/:id/vote-up', function (req, res) {
-        console.log("UPGoat!")
-        Post.findById(req.params.id).exec(function (err, post) {
-          //post.upVotes.push(req.user._id)
-          //post.voteScore = post.voteTotal + 1
-          //post.save();
-      
-          res.status(200);
+        // console.log(req.params.id)
+        Post.findById(req.params.id).then(()=>{
+            console.log("upvoat params:", req.params)
+        }).catch((err)=>{
+            console.log("upvote error:",err.message)
+            res.status(400).send(err.message)
         })
+
+
+        //console.log(req.user._id)
+        // Post.findById(req.params.id).exec(function (err, post) {
+
+        //   post.upVotes.push(req.user._id)
+        //   post.voteScore = post.voteTotal + 1
+        //   post.save();
+      
+        //   res.status(200);
+        // })
       })
       
       app.put('/posts/:id/vote-down', function (req, res) {
