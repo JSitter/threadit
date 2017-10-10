@@ -11,12 +11,20 @@ module.exports = (app) => {
 
     app.put('/posts/:id/vote-up', function (req, res) {
         // console.log(req.params.id)
-        Post.findById(req.params.id).then(()=>{
-            console.log("upvoat params:", req.params)
-        }).catch((err)=>{
-            console.log("upvote error:",err.message)
-            res.status(400).send(err.message)
-        })
+        if( !req.user ){
+            console.log("User must be signed in to vote.")
+            res.status(400).send("User not signed in")
+        }else{
+            Post.findById(req.params.id).then(()=>{
+                
+                            //check if user is logged in
+                            console.log("upvoat uid:", req.user._id)
+                        }).catch((err)=>{
+                            console.log("upvote error:",err.message)
+                            res.status(400).send(err.message)
+                        })
+        }
+
 
 
         //console.log(req.user._id)
