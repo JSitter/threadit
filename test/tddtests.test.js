@@ -5,7 +5,7 @@ const Post = require('../models/post.js')
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-mongoose.connect('localhost/threadit');
+
 
 it('should return array of posts', (done)=>{
 
@@ -19,7 +19,7 @@ it('should return array of posts', (done)=>{
 
 var newPost;
 before(()=>{
-    
+    mongoose.connect('localhost/threadit');
 })
 after((done)=>{
     Post.findByIdAndRemove( newPost._id).then((message)=>{
@@ -48,9 +48,9 @@ it('should return array of posts', (done)=>{
 
 //- Should add a new post
 it('should add a new post', (done)=>{
+    numberOfPosts = 0
     Post.find({}).then((posts)=>{
-        console.log(posts)
-       console.log(posts.length)
+        numberOfPosts = posts.length
     })
     newPost = crPost()
 
