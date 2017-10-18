@@ -2,6 +2,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 const Post = require('../models/post.js')
+const User = require('../models/user')
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
@@ -73,13 +74,15 @@ it('Should fetch a post with valid properties', (done)=>{
         expect(postr).to.have.property('subreddit')
         done()
     }).catch((err)=>{
-
         done(err)
     })
-    
 })
 
 //- should create a new user
+it("Should create a new user", (done)=>{
+    
+})
+
 //- Should find a user with an id
 //- should find a user with valid properties
 //- should remove a user
