@@ -34,7 +34,7 @@ after((done)=>{
 //Should return an array of posts
 it('should return array of posts', (done)=>{
     newPost = crPost()
-    
+
     newPost.save().then((post)=>{
         return Post.findById(post._id)
     }).then((post)=>{
@@ -49,7 +49,8 @@ it('should return array of posts', (done)=>{
 
 //- Should add a new post
 it('should add a new post', (done)=>{
-    newPost = new Post({})
+    newPost = crPost()
+    
 })
 
 //- should fetch a post with valid properties
