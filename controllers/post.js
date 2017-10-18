@@ -22,9 +22,6 @@ module.exports = (app) => {
                 res.status(400).send(err.message)
             })
         }
-
-
-
         //console.log(req.user._id)
         // Post.findById(req.params.id).exec(function (err, post) {
 

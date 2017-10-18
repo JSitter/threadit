@@ -2,7 +2,7 @@
  *      THREADIT
  *      V 1.0.0
  ***************************************************/
-
+//Require
 const express = require('express');
 const hbs = require('express-handlebars');
 const mongoose = require('mongoose');
@@ -41,7 +41,7 @@ app.set('view engine', 'hbs');
 /****************************************************
  *  Check for login token on every request
  ***************************************************/
-var checkAuth = function (req, res, next) {
+const checkAuth = function (req, res, next) {
     
     console.log("***Authentication Check***");
   
@@ -144,6 +144,7 @@ app.get('/n/:subreddit', function(req, res) {
 app.get('/error', (req, res)=>{
   res.render('error-page')
 })
+
 /**************************************
  * Setup 'add-user' POST route
  *************************************/

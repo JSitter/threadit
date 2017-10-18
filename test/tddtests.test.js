@@ -53,16 +53,37 @@ it('should add a new post', (done)=>{
         numberOfPosts = posts.length
     })
     newPost = crPost()
-
-    
+    Post.find({}).then((posts)=>{
+        expect(posts.length).to.be.equal(numberOfPosts)
+        done()
+    }).catch((err)=>{
+        done(err)
+    })
 })
 
 //- should fetch a post with valid properties
+it('Should fetch a post with valid properties', (done)=>{
+
+    Post.findOne({title: "My Title"}).then((postr)=>{
+        expect(postr).to.have.property('title')
+        expect(postr).to.have.property('url')
+        expect(postr).to.have.property('summary')
+        expect(postr).to.have.property('content')
+        expect(postr).to.have.property('comments')
+        expect(postr).to.have.property('subreddit')
+        done()
+    }).catch((err)=>{
+
+        done(err)
+    })
+    
+})
+
 //- should create a new user
 //- Should find a user with an id
 //- should find a user with valid properties
 //- should remove a user
 
 let crPost = ()=>{
-    return new Post({title: "My Title", subreddit: "my"})
+    return new Post({title: "My Title", url: "url", subreddit: "my", summary: ""})
 }
