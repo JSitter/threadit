@@ -44,12 +44,16 @@ it('should return array of posts', (done)=>{
         done(err)
     })
     
-
 });
 
 //- Should add a new post
 it('should add a new post', (done)=>{
+    Post.find({}).then((posts)=>{
+        console.log(posts)
+       console.log(posts.length)
+    })
     newPost = crPost()
+
     
 })
 
