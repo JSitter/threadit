@@ -8,7 +8,6 @@ module.exports = (app) => {
     const Post = require('../models/post.js')
     const Comment = require('../models/comment.js');
     const User = require('../models/user.js');
-
     app.put('/posts/:id/vote-up', function (req, res) {
         //check if user is logged in
         if( !req.user ){
