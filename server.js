@@ -138,7 +138,6 @@ app.get('/n/:subreddit', function (req, res) {
   Post.find({ subreddit: req.params.subreddit })
     .lean()
     .exec(function (err, posts) {
-      console.log(posts)
       res.render('posts-index', { posts: posts, title: req.params.subreddit });
     });
 
