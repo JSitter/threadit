@@ -1,20 +1,20 @@
 <h1>All Posts</h1>
 <section>
-{{#each posts}}
+    {{#each posts}}
     <article>
-        <h3><a href="/post/{{this._id}}">{{this.title}}</a></h3>
-        <p>{{this.url}}</p>
-        <a href="/n/{{this.subreddit}}">/n/{{this.subreddit}}</a>
-        <div>{{this.summary}}</div>
+        <h3><a href="/post/{{_id}}">{{title}}</a></h3>
+        <p>{{url}}</p>
+        <a href="/n/{{subreddit}}">/n/{{subreddit}}</a>
+        <div>{{summary}}</div>
     </article>
-{{/each}}
+    {{/each}}
 </section>
 <ul>
     {{#if currentUser}}
-        <li><a href="/logout">Logout</a></li>
+    <li><a href="/logout">Logout</a></li>
     {{else}}
-        <li><a href="/login">Login</a></li>
-        <li><a href="/sign-up">Sign Up</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/sign-up">Sign Up</a></li>
     {{/if}}
     <a href="/posts/new">create new post</a>
 </ul>
