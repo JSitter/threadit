@@ -9,14 +9,14 @@ This is the reddit clone assignment. This project uses NodeJS and MongoDB to dem
 3. Install dependencies using `npm install`.
 4. Run the application using `npm start`.
 
-**Note:** This application is a demo and uses Nodemon which is not typically compatible with productions servers. Nodemon is used for development purposes to automatically rebuild the application whenever it detects a change in one of the project files. Typically this is uncessesary and insecure for production environments.
+**Note:** This application is a demo and uses Nodemon which is not typically compatible with production servers. Nodemon is used for development purposes to automatically rebuild the application whenever it detects a change in one of the project files. Typically this is uncessesary and insecure for production environments.
 
 ## Running Tests
 Unit tests are located in the `test` directory and can be run by using the command `npm run test`.
 
 ## Repository Layout
 
-## Server Configuration
+### Server Configuration
 The application is initiated from the `server.js` file. This file loads and configures all application dependencies, database connections, middleware, controllers, and the templating engine.
 
 ### Controllers
